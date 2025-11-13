@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friction Force Simulator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    text-align: center;
+    padding: 30px;
+  }
+  input {
+    width: 100px;
+    padding: 5px;
+    margin: 5px;
+  }
+  .box {
+    background: white;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+  }
+  button {
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h2>🧱 Frictional Force on a Block Simulator</h2>
+<div class="box">
+  <label>Mass (kg):</label>
+  <input type="number" id="mass" value="0.1" step="0.01"><br>
+
+  <label>Force applied (N):</label>
+  <input type="number" id="force" value="5" step="0.1"><br>
+
+  <label>μ (Coefficient of friction):</label>
+  <input type="number" id="mu" value="0.5" step="0.01"><br>
+
+  <label>g (m/s²):</label>
+  <input type="number" id="g" value="9.8" step="0.1"><br>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <h3 id="result"></h3>
+</div>
+
+<script>
+function calculate() {
+  let m = parseFloat(document.getElementById("mass").value);
+  let F = parseFloat(document.getElementById("force").value);
+  let mu = parseFloat(document.getElementById("mu").value);
+  let g = parseFloat(document.getElementById("g").value);
+
+  let N = F;  // Normal force = applied horizontal force
+  let f_max = mu * N;  // maximum frictional force
+  let weight = m * g;  // downward force
+
+  let friction = (f_max >= weight) ? weight : f_max;
+
+  document.getElementById("result").innerHTML =
+    `<strong>Frictional force = ${friction.toFixed(2)} N</strong><br>
+    (fₘₐₓ = ${f_max.toFixed(2)} N, Weight = ${weight.toFixed(2)} N)`;
+}
+</script>
+
+</body>
+</html>
